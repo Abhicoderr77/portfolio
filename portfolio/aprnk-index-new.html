@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhishek Pathare - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #07090e;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background: #07090e;
+    }
+
+    .bg-video {
+      position: absolute;
+      inset: -10% -5%;
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      filter: blur(10px) brightness(0.35) saturate(1.3);
+      transform: scale(1.12);
+      opacity: 0.9;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 9, 14, 0.35), rgba(7, 9, 14, 0.75));
+    }
+
+    .hero-container {
+      width: min(1280px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3rem 4rem;
+      position: relative;
+      gap: 2rem;
+      z-index: 1;
+    }
+
+    .content-left {
+      max-width: 520px;
+      z-index: 2;
+      flex: 0 0 520px;
+    }
+
+    .greeting {
+      font-size: 1.25rem;
+      color: #d1d5db;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .name-title {
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .name-title .accent,
+    .about-content h2 .accent {
+      display: inline-block;
+      color: #8b5cf6;
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .roles {
+      font-size: 1.05rem;
+      color: #9ca3af;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.35rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 6px 28px rgba(124, 58, 237, 0.28);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      color: #ffffff;
+      border: 1px solid rgba(139, 92, 246, 0.22);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: rgba(139, 92, 246, 0.7);
+      transform: translateY(-3px);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.25rem;
+    }
+
+    .social-links a {
+      color: #9ca3af;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .social-links a:hover {
+      color: #ffffff;
+      transform: translateY(-3px);
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .content-right {
+      position: relative;
+      flex: 1 1 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 260px;
+    }
+
+    .image-wrapper {
+      position: relative;
+      max-width: 560px;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 16 / 10;
+    }
+
+    .image-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+      background-size: 10px 10px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.55;
+    }
+
+    .image-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(124, 58, 237, 0.28), transparent 70%),
+                  radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.14), transparent 70%);
+      pointer-events: none;
+      mix-blend-mode: color-dodge;
+    }
+
+    .about-section {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto 4rem;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 24px;
+      padding: 2rem clamp(1.25rem, 3vw, 3rem);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #a78bfa;
+      margin-bottom: 0.9rem;
+      font-weight: 700;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .about-content h2 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .about-content p {
+      color: #cbd5e1;
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .info-item {
+      background: rgba(15, 118, 110, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.24);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+    }
+
+    .info-item strong {
+      color: #f8fafc;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-item span {
+      color: #cbd5e1;
+    }
+
+    .soft-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.1rem;
+    }
+
+    .soft-skills span {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      color: #e2e8f0;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 992px) {
+      .hero-container {
+        flex-direction: column-reverse;
+        padding: 2.25rem 1.25rem;
+        text-align: center;
+      }
+
+      .content-left {
+        max-width: 100%;
+        margin: 0 auto 1.75rem;
+        flex: none;
+      }
+
+      .cta-group {
+        justify-content: center;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+
+      .content-right {
+        width: 100%;
+        padding-top: 0.5rem;
+      }
+
+      .image-wrapper {
+        max-width: 420px;
+        border-radius: 16px;
+      }
+
+      .name-title {
+        font-size: 2.25rem;
+      }
+
+      .greeting {
+        font-size: 1rem;
+      }
+
+      .roles, .description {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero-container { padding: 1.25rem; }
+      .name-title { font-size: 1.9rem; }
+      .cta-group { gap: 0.5rem; }
+      .btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+      .image-wrapper { max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-bg" aria-hidden="true">
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4" />
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <section id="home" class="hero-container">
+    <div class="content-left">
+      <p class="greeting">Hi, I'm</p>
+      <h1 class="name-title">
+        Abhishek <span class="accent">Pathare</span>
+      </h1>
+      <p class="roles">Web Developer | Problem Solver | Learner</p>
+      <p class="description">
+        I build fast, responsive and user-friendly websites and web applications.
+      </p>
+
+      <div class="cta-group">
+        <a href="#projects" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+          </svg>
+          View Projects
+        </a>
+        <a href="#about" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          About Me
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://github.com" target="_blank" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/abhishek-pathare-681992396/" target="_blank" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.72a1.49 1.49 0 1 0 0 2.98 1.49 1.49 0 0 0 0-2.98z"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="content-right">
+      <div class="image-wrapper">
+        <img src="myimg.png" alt="Abhishek Pathare" />
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <span class="section-label">About</span>
+    <div class="about-content">
+      <div>
+        <h2>Hi, I am <span class="accent">Abhishek Kisan Pathare</span></h2>
+        <p>
+          I completed <strong>B.Com (Computer Applications)</strong> from <strong>C.T. Bora College, Shirur</strong>
+          and earned a consistent <strong>CGPA of 8.5</strong> throughout my academic journey.
+        </p>
+        <p>
+          I have successfully completed a <strong>full-stack PHP internship at Gravimind Technology</strong>,
+          where I gained practical experience in developing functional and responsive web applications.
+          My real project work includes working with <strong>HTML, CSS, JavaScript, and MySQL</strong>
+          to create user-friendly digital experiences.
+        </p>
+        <p>
+          I am passionate about building attractive, reliable, and elegant web interfaces. My project work,
+          including the <strong>currency converter</strong> and <strong>weather detection</strong> app,
+          reflects my interest in clean design and problem-solving.
+        </p>
+
+        <div class="soft-skills" aria-label="soft skills">
+          <span>Active Listener</span>
+          <span>Quick Problem Solver</span>
+          <span>Decision Making</span>
+          <span>Self Motivated</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Education</strong>
+          <span>B.Com (Computer Applications) — C.T. Bora College, Shirur</span>
+        </div>
+        <div class="info-item">
+          <strong>Academic Result</strong>
+          <span>CGPA: 8.5</span>
+        </div>
+        <div class="info-item">
+          <strong>Experience</strong>
+          <span>Full-stack PHP internship at Gravimind Technology</span>
+        </div>
+        <div class="info-item">
+          <strong>Technical Skills</strong>
+          <span>HTML, CSS, JavaScript, PHP, MySQL, UI Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="about-section">
+    <span class="section-label">Projects</span>
+    <div class="about-content">
+      <div>
+        <h2>Selected Work</h2>
+        <p>
+          I enjoy creating practical tools that combine strong user experience with simple functionality.
+          These projects reflect my approach to solving problems with clear design, performance, and usability.
+        </p>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Currency Converter</strong>
+          <span>Built to convert values instantly with a clean interface and responsive design.</span>
+        </div>
+        <div class="info-item">
+          <strong>Weather Detection App</strong>
+          <span>Displays live weather information in an intuitive format for quick decision-making.</span>
+        </div>
+        <div class="info-item">
+          <strong>Portfolio Website</strong>
+          <span>A polished personal portfolio focused on readability, branding, and mobile responsiveness.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
